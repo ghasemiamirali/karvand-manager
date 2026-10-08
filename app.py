@@ -89,3 +89,37 @@ while True:
 
         with open("data/karvands.json", "w") as file:
             json.dump(karvands, file, indent=2)
+
+  
+    elif user_choice == 3:
+        try:                  #using this, if the user types sth but number, wont be an error.
+            user_search = int(input("search the id:"))
+        except ValueError:
+            print("please enter a number")
+            continue
+        for karvand in karvands:
+           if user_search == karvand["id"]:
+                           print(
+                               f"the karvand exists, here is the name: {karvand["name"]}")
+                           break
+        else:
+             print("such a karvand does not exist")
+
+    elif user_choice == 4:
+    
+            found = False                
+            user_search = input(
+                "enter the skill or skills which you desire:").split(",")
+            for karvand in karvands:
+                for skill in user_search:
+                    if skill in karvand["skills"]:
+                
+                        print(
+                            f"such a karvand exists: {karvand["name"], karvand["skills"]}")
+    
+                        found = True
+                        break
+                        
+            if not found:  #the same as if found == false (but more functional)
+                print("such a karvand does not exist")
+    
