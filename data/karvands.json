@@ -1,0 +1,37 @@
+[
+  {
+    "id": 3011,
+    "name": "amirhosein",
+    "email_address": "amirhosein@gmail.com",
+    "city": "kerman",
+    "education": "diplom",
+    "study_field": "computer",
+    "skills": [
+      {
+        "skill_name": "python",
+        "skill_level": "100",
+        "skill_score": 100
+      },
+      {
+        "skill_name": "java",
+        "skill_level": "advanced",
+        "skill_score": 70
+      }
+    ]
+  },
+  {
+    "id": 9909,
+    "name": "amir",
+    "email_address": "amir@",
+    "city": "kerman",
+    "education": "diplom",
+    "study_field": "computer",
+    "skills": [
+      {
+        "skill_name": "python",
+        "skill_level": "advanced",
+        "skill_score": 40
+      }
+    ]
+  }
+]
