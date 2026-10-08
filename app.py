@@ -90,6 +90,63 @@ while True:
         with open("data/karvands.json", "w") as file:
             json.dump(karvands, file, indent=2)
 
+    
+    elif user_choice == 2:
+                             
+        try:     #using this, if we have sth but a number, the code wont crash.
+             id_search = int(input("enter the karvands id to edit the info:"))
+        except ValueError:
+            print ("enter a number as an id:")
+            continue
+
+        for karvand in karvands:
+
+            if id_search == karvand["id"]:
+                user_choice2 = int(input(
+                    "the karvand exist, choose to edit: 1)name 2)email 3)city 4)education 5)skills:"))
+                if user_choice2 == 1:
+                    new_name = input("enter the new name:")
+                    karvand["name"] = new_name
+                    print("done")
+                elif user_choice2 == 2:
+                    new_email = input("enter the new email address:")
+                    karvand["email_address"] = new_email
+                    print ("done")
+                elif user_choice2 == 3:
+                    new_city = input("enter the new city name:")
+                    karvand["city"] = new_city
+                    print("done")
+                elif user_choice2 == 4:
+                    new_education = input("enter the new education:")
+                    karvand["education"] = new_education
+                    print("done")
+                elif user_choice2 == 5:
+                    
+                    new_skill_name = input("enter the new skill name:")
+                    new_skill_level = input ("enter the new skill level: ")
+                    new_skill_score = int (input ("enter the new skill score ( 0 to 100):"))
+                    while True:
+                        if 0 <= new_skill_score <= 100:
+                            break
+                        elif new_skill_score < 0 or new_skill_score > 100:
+                            new_skill_score = int (input("the score must be between 0 to 100:"))
+                            break
+                    new_skills = {
+                        "skill_name" : new_skill_name,
+                        "skill_level": new_skill_level,
+                        "skill_score": new_skill_score
+                    }
+
+                    karvand ["skills"].append(new_skills)
+                    print("done")
+                    break
+                
+        else:
+            print("such a karvand does not exist")          # if the id is invalid >> this will be printed
+
+        with open("data/karvands.json", "w") as file:
+            json.dump(karvands, file, indent=2)
+
   
     elif user_choice == 3:
         try:                  #using this, if the user types sth but number, wont be an error.
@@ -122,4 +179,108 @@ while True:
                         
             if not found:  #the same as if found == false (but more functional)
                 print("such a karvand does not exist")
+
+
+    elif user_choice == 5:
+        print(json.dumps(karvands, indent=2))
+
+    elif user_choice == 6:
+        name = input("enter the name you wish to delete:")
+        for karvand in karvands:
+            if name == karvand["name"]:
+                karvands.remove(karvand)
+                print("done")
+                break
+        else:
+            print("such a karvand does not exist")
+
+        with open("data/karvands.json", "w") as file:
+            json.dump(karvands, file, indent=2)
+
+    elif user_choice == 7:
+        print("good luck")
+        break
+
+    elif user_choice == 8:
+
+        if not os.path.exists("data/report.json"):       # if the report file does not exist, it makes it.
+
+            with open("data/report.json", "w") as file:
+
+                json.dump({}, file)
+
+        skills_name = set()    # here I used set to avoid counting repeated skills.
+                            # all of them went to a set and then I defined
+                            # another variable and used len to count the items in skills_name
+                            # then I put it in the report dictionary.
+        cities = set()
+
+        all_skills = []
+        unique_skills = []        #for the report part >> showing the unique skills
+
+
+
+        for karvand in karvands:
+
+            for skill in karvand["skills"]:
+
+                skills_name.add(skill["skill_name"])
+
+
+        skill_score_total = 0
+
+        skill_score_count = 0
+
+        for karvand in karvands:
+
+            for skill in karvand["skills"]:
+
+                skill_score_total += skill["skill_score"]
+
+                skill_score_count += 1
+
+
+        if skill_score_count > 0:
+
+            average_score = skill_score_total / skill_score_count
+
+        else:
+
+            average_score = 0
+
+
+        total_skills = len(skills_name)
+
+        for karvand in karvands:
+            cities.add(karvand["city"])
+
+
+        for karvand in karvands:
+            for skill in karvand["skills"]:
+                all_skills.append(skill["skill_name"])
+
+
+
+        for skill in all_skills:
+            if all_skills.count(skill) == 1:
+                unique_skills.append(skill)
+
+
+        report = {
+
+            "total_karvands": len(karvands),
+
+            "total_skills": total_skills,
+
+            "scores_average": average_score,
+            "cities": list(cities),                #we used list because we need to have names beside eachother
+             "unique_skills" : unique_skills
+
+        }
+
+
+        with open("data/report.json", "w") as file:
+            json.dump(report, file, indent=2)
+
+   
     
